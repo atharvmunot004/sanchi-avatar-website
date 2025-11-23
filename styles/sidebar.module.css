@@ -1,0 +1,55 @@
+/* Sidebar module styles - not actively used, styles are inline */
+.sidebar {
+  width: 260px;
+  background: rgba(13, 27, 58, 0.95);
+  padding: 40px 20px;
+  border-right: 1px solid rgba(10, 79, 255, 0.3);
+  overflow-y: auto;
+  color: #ffffff;
+}
+
+.brand {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: #0b53ff;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.sectionTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: #8899cc;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #8899cc;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.menuItem.active {
+  background: rgba(11, 83, 255, 0.2);
+  color: #0b53ff;
+}
+
+.menuItem:hover {
+  background: rgba(11, 83, 255, 0.15);
+}

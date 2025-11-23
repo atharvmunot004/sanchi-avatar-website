@@ -1,0 +1,211 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import useAvatarStore from '@/store/avatarStore'
+import ModelViewer from '@/components/ModelViewer'
+
+const faceModels = [
+  {
+    id: 'tone_light',
+    label: 'Light',
+    modelURL: '/models/face/light.glb',
+    defaultRotation: { x: 0, y: 40, z: 0 },
+  },
+  {
+    id: 'tone_medium',
+    label: 'Medium',
+    modelURL: '/models/face/medium.glb',
+    defaultRotation: { x: 0, y: 40, z: 0 },
+  },
+  {
+    id: 'tone_dark',
+    label: 'Dark',
+    modelURL: '/models/face/dark.glb',
+    defaultRotation: { x: 0, y: 40, z: 0 },
+  },
+]
+
+export default function FinishPage() {
+  const router = useRouter()
+  const { faceTone, resetAvatar } = useAvatarStore()
+  const [downloadingPNG, setDownloadingPNG] = useState(false)
+  const [downloadingGLB, setDownloadingGLB] = useState(false)
+
+  useEffect(() => {
+    if (!faceTone) {
+      router.push('/start')
+    }
+  }, [faceTone, router])
+
+  const currentModel = faceModels.find((m) => m.id === faceTone) || faceModels[0]
+
+  const handleDownloadPNG = async () => {
+    setDownloadingPNG(true)
+    try {
+      const response = await fetch('/api/render/png', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ faceTone }),
+      })
+
+      if (response.ok) {
+        const blob = await response.blob()
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = 'avatar.png'
+        document.body.appendChild(a)
+        a.click()
+        window.URL.revokeObjectURL(url)
+        document.body.removeChild(a)
+      }
+    } catch (error) {
+      console.error('Error downloading PNG:', error)
+    } finally {
+      setDownloadingPNG(false)
+    }
+  }
+
+  const handleDownloadGLB = async () => {
+    setDownloadingGLB(true)
+    try {
+      const response = await fetch('/api/render/glb', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ faceTone }),
+      })
+
+      if (response.ok) {
+        const blob = await response.blob()
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = 'avatar.glb'
+        document.body.appendChild(a)
+        a.click()
+        window.URL.revokeObjectURL(url)
+        document.body.removeChild(a)
+      }
+    } catch (error) {
+      console.error('Error downloading GLB:', error)
+    } finally {
+      setDownloadingGLB(false)
+    }
+  }
+
+  const handleCreateNew = () => {
+    resetAvatar()
+    router.push('/start')
+  }
+
+  if (!faceTone) {
+    return null
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-12 py-12" style={{ maxWidth: '1480px' }}>
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold mb-3">
+            Your Avatar Is Ready!
+          </h1>
+          <p className="text-lg text-textSecondary">
+            Here's the personalized avatar you created.
+          </p>
+        </div>
+
+        {/* Main Content */}
+        <div className="flex flex-col lg:flex-row gap-12 items-start justify-center">
+          {/* 3D Preview */}
+          <div className="flex-shrink-0 mx-auto lg:mx-0">
+            <ModelViewer
+              modelUrl={currentModel.modelURL}
+              defaultRotation={currentModel.defaultRotation}
+            />
+          </div>
+
+          {/* Actions Panel */}
+          <div className="flex flex-col gap-6 w-full lg:w-auto lg:min-w-[400px]">
+            <div className="bg-white rounded-lg border-2 border-gray-200 p-6">
+              <h2 className="text-2xl font-bold mb-4">Download Your Avatar</h2>
+              
+              <div className="space-y-4">
+                <button
+                  onClick={handleDownloadPNG}
+                  disabled={downloadingPNG}
+                  className="w-full px-6 py-4 bg-primary text-white rounded-lg font-semibold hover:opacity-90 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {downloadingPNG ? (
+                    <>
+                      <span className="animate-spin">⏳</span>
+                      <span>Downloading...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>📥</span>
+                      <span>Download PNG</span>
+                    </>
+                  )}
+                </button>
+
+                <button
+                  onClick={handleDownloadGLB}
+                  disabled={downloadingGLB}
+                  className="w-full px-6 py-4 bg-primary text-white rounded-lg font-semibold hover:opacity-90 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {downloadingGLB ? (
+                    <>
+                      <span className="animate-spin">⏳</span>
+                      <span>Downloading...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>📦</span>
+                      <span>Download 3D GLB</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <div className="bg-gray-50 rounded-lg border-2 border-gray-200 p-6">
+              <h3 className="text-lg font-semibold mb-3">Features</h3>
+              <ul className="space-y-2 text-textSecondary">
+                <li className="flex items-start gap-2">
+                  <span>✓</span>
+                  <span>3D preview of selected face tone</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>✓</span>
+                  <span>Option to download PNG</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>✓</span>
+                  <span>Option to download 3D GLB</span>
+                </li>
+                <li className="flex items-start gap-2 text-gray-400">
+                  <span>○</span>
+                  <span>Option to regenerate with modifications (coming soon)</span>
+                </li>
+              </ul>
+            </div>
+
+            <button
+              onClick={handleCreateNew}
+              className="w-full px-6 py-4 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:border-primary hover:text-primary transition-all duration-200"
+            >
+              Create New Avatar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+

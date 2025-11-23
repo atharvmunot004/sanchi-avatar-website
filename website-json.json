@@ -1,0 +1,232 @@
+{
+    "page": {
+      "title": "Create Your Digital Identity",
+      "background": {
+        "type": "gradient",
+        "colors": ["#022046", "#0A4FFF", "#003D8F"],
+        "direction": "radial"
+      },
+      "font": {
+        "heading": {
+          "family": "Rounded playful serif",
+          "size": "36px",
+          "weight": "600",
+          "color": "#FFFFFF",
+          "alignment": "center",
+          "text": "Create Your digital identity"
+        },
+        "body": {
+          "family": "Monospace",
+          "color": "#FFFFFF"
+        }
+      }
+    },
+  
+    "3d": {
+      "engine": "ThreeJS",
+      "renderer": "WebGLRenderer",
+      "lighting": {
+        "types": [
+          { "kind": "ambient", "intensity": 0.4 },
+          { "kind": "directional", "intensity": 0.8, "position": [2, 2, 2] }
+        ]
+      },
+      "avatarScene": {
+        "camera": {
+          "type": "perspective",
+          "fov": 45,
+          "position": [0, 1.6, 3.5]
+        },
+        "controls": {
+          "orbitControls": true,
+          "rotate": true,
+          "zoom": true,
+          "pan": false
+        }
+      }
+    },
+  
+    "layout": {
+      "type": "two-column",
+  
+      "leftSection": {
+        "sculptArea": {
+          "type": "3d-viewport",
+          "description": "Primary avatar-building canvas where user sculpts and assembles their 3D digital identity.",
+          "features": {
+            "dragRotate": true,
+            "scrollZoom": true,
+            "meshEditing": true,
+            "subdivisionControls": false,
+            "avatarAssembly": true
+          },
+          "shape": "circle",
+          "diameter": "420px",
+          "background": {
+            "type": "gradient",
+            "colors": ["#1A2346", "#000817"]
+          },
+          "placeholderText": "Sculpt here",
+          "textStyle": { "size": "12px", "alignment": "center" }
+        },
+  
+        "confirmButton": {
+          "label": "Confirm",
+          "dimensions": { "width": "360px", "height": "65px" },
+          "shape": "rounded-rectangle",
+          "radius": "25px",
+          "backgroundColor": "#0C1330",
+          "textColor": "#FFFFFF",
+          "position": "below circle, centered"
+        }
+      },
+  
+      "rightSection": {
+  
+        "genderSelection": {
+          "title": "",
+          "type": "3d-component-category",
+          "componentType": "baseMesh",
+          "options": [
+            {
+              "label": "Male",
+              "3dAsset": {
+                "type": "baseAvatar",
+                "file": "/assets/meshes/base_male.glb",
+                "scale": 1.0
+              },
+              "ui": {
+                "shape": "rounded-square",
+                "size": "200px",
+                "background": {
+                  "type": "gradient",
+                  "colors": ["#031842", "#03204F"]
+                }
+              }
+            },
+            {
+              "label": "Female",
+              "3dAsset": {
+                "type": "baseAvatar",
+                "file": "/assets/meshes/base_female.glb",
+                "scale": 1.0
+              },
+              "ui": {
+                "shape": "rounded-square",
+                "size": "200px",
+                "background": {
+                  "type": "gradient",
+                  "colors": ["#031842", "#03204F"]
+                }
+              }
+            }
+          ],
+          "spacing": "40px",
+          "alignment": "row"
+        },
+  
+        "hairOptions": {
+          "title": "",
+          "type": "3d-component-category",
+          "componentType": "hairMesh",
+          "options": [
+            {
+              "label": "Hair opt1",
+              "3dAsset": {
+                "type": "hair",
+                "file": "/assets/meshes/hair_01.glb",
+                "attachmentPoint": "head"
+              },
+              "uiSize": "120px"
+            },
+            {
+              "label": "Hair opt2",
+              "3dAsset": {
+                "type": "hair",
+                "file": "/assets/meshes/hair_02.glb",
+                "attachmentPoint": "head"
+              },
+              "uiSize": "120px"
+            },
+            {
+              "label": "Hair opt2",
+              "3dAsset": {
+                "type": "hair",
+                "file": "/assets/meshes/hair_03.glb",
+                "attachmentPoint": "head"
+              },
+              "uiSize": "120px"
+            },
+            {
+              "label": "Hair opt3",
+              "3dAsset": {
+                "type": "hair",
+                "file": "/assets/meshes/hair_04.glb",
+                "attachmentPoint": "head"
+              },
+              "uiSize": "120px"
+            }
+          ],
+          "uiStyle": {
+            "shape": "rounded-square",
+            "background": {
+              "type": "gradient",
+              "colors": ["#031842", "#03204F"]
+            }
+          },
+          "spacing": "20px",
+          "alignment": "row"
+        },
+  
+        "apparelSection": {
+          "title": "Choose Apparel",
+          "titleStyle": {
+            "font": "Monospace",
+            "size": "20px",
+            "color": "#FFFFFF",
+            "marginTop": "40px"
+          },
+          "type": "3d-component-category",
+          "componentType": "clothingMesh",
+          "options": [
+            {
+              "label": "Outfit A",
+              "3dAsset": {
+                "file": "/assets/meshes/apparel_01.glb",
+                "type": "bodyWear",
+                "attachmentPoint": "torso"
+              },
+              "ui": {
+                "shape": "rounded-rectangle",
+                "width": "260px",
+                "height": "300px",
+                "background": {
+                  "type": "gradient",
+                  "colors": ["#002761", "#002D7C"]
+                }
+              }
+            },
+            {
+              "label": "Outfit B",
+              "3dAsset": {
+                "file": "/assets/meshes/apparel_02.glb",
+                "type": "bodyWear",
+                "attachmentPoint": "torso"
+              },
+              "ui": {
+                "shape": "rounded-rectangle",
+                "width": "260px",
+                "height": "300px",
+                "background": {
+                  "type": "gradient",
+                  "colors": ["#002761", "#002D7C"]
+                }
+              }
+            }
+          ],
+          "alignment": "row",
+          "spacing": "40px"
+        }
+      }
+    }
+  }

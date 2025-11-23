@@ -18,20 +18,20 @@ export default function Sidebar() {
 
   const sections = [
     {
-      title: 'Main',
+      title: 'Principale',
       items: [
-        { icon: 'home', label: 'Dashboard', active: true, href: '/dashboard' },
-        { icon: 'health', label: 'Health Outreach', href: '#' },
-        { icon: 'analytics', label: 'Financial analytics', href: '#' },
-        { icon: 'more', label: 'More', href: '#' },
+        { icon: 'home', label: 'Consulum', active: true, href: '/dashboard' },
+        { icon: 'health', label: 'Sanitas Mittimus', href: '#' },
+        { icon: 'analytics', label: 'Analytica Pecuniaria', href: '#' },
+        { icon: 'more', label: 'Maior', href: '#' },
       ],
     },
     {
-      title: 'Account Pages',
+      title: 'Paginae Rationis',
       items: [
-        { icon: 'profile', label: 'Profile', href: '#' },
-        { icon: 'login', label: 'Sign In', href: '#' },
-        { icon: 'signup', label: 'Sign Up', href: '#' },
+        { icon: 'profile', label: 'Profundus', href: '#' },
+        { icon: 'login', label: 'Signa Ingressus', href: '#' },
+        { icon: 'signup', label: 'Signa Recessus', href: '#' },
       ],
     },
   ]
@@ -59,7 +59,7 @@ export default function Sidebar() {
           letterSpacing: '0.5px',
         }}
       >
-        Square Sphere
+        Sphaera Quadrata
       </h2>
 
       {sections.map((section, idx) => (

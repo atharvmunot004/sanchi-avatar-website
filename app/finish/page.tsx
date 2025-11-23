@@ -3,65 +3,26 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import useAvatarStore from '@/store/avatarStore'
-import ModelViewer from '@/components/ModelViewer'
-
-const faceModels = [
-  {
-    id: 'tone_light',
-    label: 'Light',
-    modelURL: '/models/face/light.glb',
-    defaultRotation: { x: 0, y: 40, z: 0 },
-  },
-  {
-    id: 'tone_medium',
-    label: 'Medium',
-    modelURL: '/models/face/medium.glb',
-    defaultRotation: { x: 0, y: 40, z: 0 },
-  },
-  {
-    id: 'tone_dark',
-    label: 'Dark',
-    modelURL: '/models/face/dark.glb',
-    defaultRotation: { x: 0, y: 40, z: 0 },
-  },
-]
+import AvatarViewport from '@/components/AvatarViewport'
 
 export default function FinishPage() {
   const router = useRouter()
-  const { faceTone, resetAvatar } = useAvatarStore()
+  const { baseMesh, reset } = useAvatarStore()
   const [downloadingPNG, setDownloadingPNG] = useState(false)
   const [downloadingGLB, setDownloadingGLB] = useState(false)
 
   useEffect(() => {
-    if (!faceTone) {
-      router.push('/start')
+    if (!baseMesh) {
+      router.push('/')
     }
-  }, [faceTone, router])
-
-  const currentModel = faceModels.find((m) => m.id === faceTone) || faceModels[0]
+  }, [baseMesh, router])
 
   const handleDownloadPNG = async () => {
     setDownloadingPNG(true)
     try {
-      const response = await fetch('/api/render/png', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ faceTone }),
-      })
-
-      if (response.ok) {
-        const blob = await response.blob()
-        const url = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = 'avatar.png'
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(url)
-        document.body.removeChild(a)
-      }
+      // TODO: Implement PNG export API
+      console.log('PNG download not yet implemented')
+      alert('PNG download feature coming soon!')
     } catch (error) {
       console.error('Error downloading PNG:', error)
     } finally {
@@ -72,15 +33,9 @@ export default function FinishPage() {
   const handleDownloadGLB = async () => {
     setDownloadingGLB(true)
     try {
-      const response = await fetch('/api/render/glb', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ faceTone }),
-      })
-
-      if (response.ok) {
+      if (baseMesh) {
+        // Download the GLB file directly
+        const response = await fetch(baseMesh)
         const blob = await response.blob()
         const url = window.URL.createObjectURL(blob)
         const a = document.createElement('a')
@@ -99,11 +54,11 @@ export default function FinishPage() {
   }
 
   const handleCreateNew = () => {
-    resetAvatar()
-    router.push('/start')
+    reset()
+    router.push('/')
   }
 
-  if (!faceTone) {
+  if (!baseMesh) {
     return null
   }
 
@@ -124,10 +79,9 @@ export default function FinishPage() {
         <div className="flex flex-col lg:flex-row gap-12 items-start justify-center">
           {/* 3D Preview */}
           <div className="flex-shrink-0 mx-auto lg:mx-0">
-            <ModelViewer
-              modelUrl={currentModel.modelURL}
-              defaultRotation={currentModel.defaultRotation}
-            />
+            <div style={{ width: '420px', height: '420px', margin: '0 auto' }}>
+              <AvatarViewport />
+            </div>
           </div>
 
           {/* Actions Panel */}
@@ -179,11 +133,11 @@ export default function FinishPage() {
               <ul className="space-y-2 text-textSecondary">
                 <li className="flex items-start gap-2">
                   <span>✓</span>
-                  <span>3D preview of selected face tone</span>
+                  <span>3D preview of your avatar</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span>✓</span>
-                  <span>Option to download PNG</span>
+                  <span>○</span>
+                  <span>Option to download PNG (coming soon)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span>✓</span>

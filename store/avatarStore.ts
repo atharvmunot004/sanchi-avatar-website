@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 interface AvatarState {
   gender: 'male' | 'female' | null
@@ -17,7 +17,7 @@ interface AvatarState {
   reset: () => void
 }
 
-const useAvatarStore = create<AvatarState>(
+const useAvatarStore = create<AvatarState>()(
   persist(
     (set) => ({
       gender: null,
@@ -36,6 +36,7 @@ const useAvatarStore = create<AvatarState>(
     }),
     {
       name: 'avatar-store',
+      storage: createJSONStorage(() => localStorage),
     }
   )
 )

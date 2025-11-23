@@ -17,7 +17,7 @@ export default function DashboardContent() {
           letterSpacing: '0.5px',
         }}
       >
-        Welcome to SquareSphere
+        Tuus Consulum
       </h1>
 
       {/* Content Grid */}
@@ -113,7 +113,7 @@ function AvatarCard() {
           marginBottom: '16px',
         }}
       >
-        Avatar placeholder
+        Avatarium Temporale
       </h3>
       <Suspense fallback={<div>Loading avatar...</div>}>
         <div
@@ -207,7 +207,7 @@ function ProfileCard() {
             fontWeight: 600,
           }}
         >
-          Profile
+          Profundus
         </h3>
         <button
           style={{
@@ -243,7 +243,7 @@ function ProfileCard() {
               textTransform: 'uppercase',
             }}
           >
-            Name
+            Nomen
           </label>
           <p
             style={{
@@ -276,7 +276,7 @@ function ProfileCard() {
               textTransform: 'uppercase',
             }}
           >
-            Age
+            Aetas
           </label>
           <p
             style={{
@@ -309,7 +309,7 @@ function ProfileCard() {
               textTransform: 'uppercase',
             }}
           >
-            Address
+            Locus
           </label>
           <p
             style={{
@@ -324,7 +324,7 @@ function ProfileCard() {
               textShadow: isGlitchState ? '2px 0 #00FFFF, -2px 0 #FF00FF' : 'none',
             }}
           >
-            {isGlitchState ? glitchText.address : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut'}
+            {isGlitchState ? glitchText.address : 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium'}
           </p>
         </div>
       </div>
